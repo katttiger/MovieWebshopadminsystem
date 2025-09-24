@@ -6,7 +6,7 @@ public abstract class Product {
     private double price;
     private String description;
 
-    public String Category() {
+    public String category() {
         return "";
     }
 

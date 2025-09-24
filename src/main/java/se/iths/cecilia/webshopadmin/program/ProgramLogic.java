@@ -25,13 +25,95 @@ public class ProgramLogic {
 
     public void addProduct() {
         //add menu that asks what type of product should be added
+        System.out.println("What type of product do you want to add? ");
+        System.out.println("1. Movie");
+        System.out.println("2. Candy");
+        System.out.println("3. Stuffed animal");
+
+        int userInput = -1;
+        try {
+            do {
+                Scanner sc = new Scanner(System.in);
+                userInput = sc.hasNextInt() ? sc.nextInt() : -1;
+
+                if (userInput == -1) {
+                    throw new InputMismatchException();
+                }
+            }
+            while (userInput < 1 || userInput > 3);
+
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid option");
+            ;
+        }
+
+        Product newProduct = null;
+        switch (userInput) {
+            case 1 -> newProduct = addNewMovie();
+            case 2 -> newProduct = addNewCandy();
+            case 3 -> newProduct = addNewStuffedAnimal();
+            default -> System.out.println("Invalid input");
+        }
+        System.out.println("You have added a new " + newProduct.category());
+        products.add(newProduct);
+        System.out.println("Press enter to return to menu.");
+        sc.nextLine();
+    }
+
+    public Movie addNewMovie() {
+        Movie newMovie = new Movie();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("You want to add a movie.");
+
+        System.out.println("Enter name: ");
+        newMovie.setName(sc.nextLine());
+
+        System.out.println("Enter description: ");
+        newMovie.setDescription(sc.nextLine());
+
+        do {
+            System.out.println("Enter article number: ");
+            newMovie.setArticleNumber(sc.hasNextInt() ? sc.nextInt() : -1);
+            sc.nextLine();
+            if (newMovie.getArticleNumber() == -1) {
+                System.out.println("Articlenumber must be a positive integer.");
+            }
+            determineArticleNumberIsValid(newMovie);
+        } while (newMovie.getArticleNumber() == -1);
+
+        do {
+            System.out.println("Enter price (SEK): ");
+            newMovie.setPrice(sc.hasNextDouble() ? sc.nextDouble() : -1);
+            sc.nextLine();
+            if (newMovie.getPrice() == -1) {
+                System.out.println("Price must be a positive number.");
+            }
+        } while (newMovie.getPrice() == -1);
+        return newMovie;
+    }
+
+    public int determineArticleNumberIsValid(Product product) {
+        //check that article number is unique. PROBLEM TODAY: article number is still added
+        for (int i = 0; i < products.toArray().length; i++) {
+            if (product.getArticleNumber() == products.get(i).getArticleNumber()) {
+                System.out.println("Articlenumber is already taken. Enter another.");
+                return -1;
+            }
+        }
+        return product.getArticleNumber();
+    }
+
+    public Candy addNewCandy() {
+        System.out.println("You want to add a candy.");
+        return null;
+    }
+
+    public StuffedAnimal addNewStuffedAnimal() {
+        System.out.println("You want to add a stuffed animal.");
+
+        return null;
         //ask user to enter valid input
         //ERRORHANDLING: PRICE MAY ONLY BE A NUMBER. NO CHARS ALLOWED
-
-        //When done, print a summary of the object that will be added
-        //the item is stored in file + print a fine message
-        //the user presses enter
-        //the user is sent back to the menu.
     }
 
     public void listAllProducts() {
@@ -66,16 +148,17 @@ public class ProgramLogic {
                 for (int i = 0; i < products.toArray().length; i++) {
                     if (products.get(i).getArticleNumber() == userInput) {
                         productReturned = products.get(i);
-                        break;
                     }
+
                     if (productReturned != null) {
-                        System.out.println("Your product:" + productReturned.toString());
+                        System.out.println("Your product: \n" + productReturned.toString());
+                        System.out.println("----------");
                     } else {
                         System.out.println("No product with articlenumber " + userInput + "was found.");
                     }
-
                     System.out.println("Press enter to return to menu.");
                     sc.nextLine();
+                    break;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("You may only enter whole numbers.");

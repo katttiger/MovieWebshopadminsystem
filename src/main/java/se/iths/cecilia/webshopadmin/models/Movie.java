@@ -10,7 +10,7 @@ public class Movie extends Product {
 
     @Override
     public String toString() {
-        return "Category: " + Category()
+        return category()
                 + "\nArticle number: " + this.getArticleNumber()
                 + "\nName: " + this.getName()
                 + "\nDescription: " + this.getDescription()
@@ -18,7 +18,7 @@ public class Movie extends Product {
     }
 
     @Override
-    public String Category() {
+    public String category() {
         return "Category: " + this.category;
     }
 }
