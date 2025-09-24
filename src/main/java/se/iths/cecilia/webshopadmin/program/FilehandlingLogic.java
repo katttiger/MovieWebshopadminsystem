@@ -1,4 +1,4 @@
 package se.iths.cecilia.webshopadmin.program;
 
-public class FileHandlingLogic {
+public class FilehandlingLogic {
 }

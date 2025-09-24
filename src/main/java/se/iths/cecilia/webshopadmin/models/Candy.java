@@ -7,16 +7,21 @@ public class Candy extends Product {
         this.category = "Candy";
     }
 
-    @Override
-    public String toString() {
-        return "Category: " + this.category
-                + "Article number: " + this.getArticleNumber()
-                + "Name: " + this.getName()
-                + "Description: " + this.getDescription()
-                + "Price (SEK)" + this.getPrice();
+    public Candy(String category) {
+        this.category = category;
     }
 
     @Override
-    public void Category() {
+    public String toString() {
+        return "Category: " + Category()
+                + "\nArticle number: " + this.getArticleNumber()
+                + "\nName: " + this.getName()
+                + "\nDescription: " + this.getDescription()
+                + "\nPrice (SEK): " + this.getPrice();
+    }
+
+    @Override
+    public String Category() {
+        return "Category: " + this.category;
     }
 }

@@ -10,16 +10,15 @@ public class Movie extends Product {
 
     @Override
     public String toString() {
-        return "Category: " + this.category
-                + "Article number: " + this.getArticleNumber()
-                + "Name: " + this.getName()
-                + "Description: " + this.getDescription()
-                + "Price (SEK)" + this.getPrice();
+        return "Category: " + Category()
+                + "\nArticle number: " + this.getArticleNumber()
+                + "\nName: " + this.getName()
+                + "\nDescription: " + this.getDescription()
+                + "\nPrice (SEK): " + this.getPrice();
     }
 
     @Override
-    public void Category() {
+    public String Category() {
+        return "Category: " + this.category;
     }
-
-
 }
