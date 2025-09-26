@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ProductDAO implements ProductDAOInterface {
+public class ProductDAOScanner implements ProductDAOInterface {
     //DATA ACCESS TO DB
     Scanner sc = new Scanner(System.in);
     //G : LIST WITH PRODUCTS
@@ -18,7 +18,7 @@ public class ProductDAO implements ProductDAOInterface {
     Errorcheck errorcheck;
 
     //VG : FILEHANDLING (STREAM INPUT AND OUTPUT)
-    public ProductDAO() {
+    public ProductDAOScanner() {
         this.products = seedData();
         this.errorcheck = new Errorcheck();
     }

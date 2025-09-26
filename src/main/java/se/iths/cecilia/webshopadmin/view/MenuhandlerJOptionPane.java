@@ -27,27 +27,35 @@ public class MenuhandlerJOptionPane implements UIInterface {
                             "\n 3. Search for product" +
                             "\n 4. Close application");
             try {
-                choice = Integer.parseInt(answer);
-                switch (choice) {
-                    case 1 -> {
-                        choice = 1;
+                if (answer.toString().equals(JOptionPane.OK_OPTION)) {
+                    choice = Integer.parseInt(answer);
+                    switch (choice) {
+                        case 1 -> {
+                            choice = 1;
+                        }
+                        case 2 -> {
+                            choice = 2;
+                        }
+                        case 3 -> {
+                            choice = 3;
+                        }
+                        case 4 -> {
+                            choice = 4;
+                        }
+                        default -> {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Please enter a valid number.");
+                            choice = 0;
+                        }
                     }
-                    case 2 -> {
-                        choice = 2;
-                    }
-                    case 3 -> {
-                        choice = 3;
-                    }
-                    case 4 -> {
-                        choice = 4;
-                    }
-                    default -> {
-                        JOptionPane.showMessageDialog(null, "Please enter a valid number.");
-                        choice = 0;
-                    }
+                } else {
+                    choice = 4;
                 }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid number.");
+            } catch (NumberFormatException | NullPointerException e) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please enter a valid number.");
             }
         } while (choice < 1 || choice > 4);
         return choice;

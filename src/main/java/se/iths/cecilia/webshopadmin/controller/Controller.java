@@ -1,18 +1,19 @@
 package se.iths.cecilia.webshopadmin.controller;
 
-import se.iths.cecilia.webshopadmin.DAO.ProductDAO;
-import se.iths.cecilia.webshopadmin.view.MenuhandlerScanner;
+import se.iths.cecilia.webshopadmin.DAO.ProductDAOInterface;
+import se.iths.cecilia.webshopadmin.DAO.ProductDAOJOptionPane;
+import se.iths.cecilia.webshopadmin.view.MenuhandlerJOptionPane;
 import se.iths.cecilia.webshopadmin.view.UIInterface;
 
 import java.util.Scanner;
 
 public class Controller implements ControllerInterface {
     private UIInterface menuhandler;
-    private ProductDAO productDAO;
+    private ProductDAOInterface productDAO;
 
     public Controller() {
-        this.menuhandler = new MenuhandlerScanner();
-        this.productDAO = new ProductDAO();
+        this.menuhandler = new MenuhandlerJOptionPane();
+        this.productDAO = new ProductDAOJOptionPane();
     }
 
     @Override
@@ -27,19 +28,17 @@ public class Controller implements ControllerInterface {
         switch (userRequest) {
             case 1 -> {
                 productDAO.addProduct();
-                returnToMenuPrompt();
+                //returnToMenuPrompt();
             }
             case 2 -> {
                 productDAO.listAllProducts();
-                returnToMenuPrompt();
+                //returnToMenuPrompt();
             }
             case 3 -> {
                 productDAO.searchForProduct();
-                returnToMenuPrompt();
+                //returnToMenuPrompt();
             }
-            case 4 -> {
-                System.out.println("Closing application");
-            }
+            case 4 -> System.out.println("Closing application");
         }
     }
 
