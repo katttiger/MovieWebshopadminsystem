@@ -1,16 +1,17 @@
 package se.iths.cecilia.webshopadmin.controller;
 
 import se.iths.cecilia.webshopadmin.DAO.ProductDAO;
-import se.iths.cecilia.webshopadmin.view.MenuhandlerJOptionPane;
+import se.iths.cecilia.webshopadmin.view.MenuhandlerScanner;
+import se.iths.cecilia.webshopadmin.view.UIInterface;
 
 import java.util.Scanner;
 
 public class Controller implements ControllerInterface {
-    private MenuhandlerJOptionPane menuhandler;
+    private UIInterface menuhandler;
     private ProductDAO productDAO;
 
     public Controller() {
-        this.menuhandler = new MenuhandlerJOptionPane();
+        this.menuhandler = new MenuhandlerScanner();
         this.productDAO = new ProductDAO();
     }
 
