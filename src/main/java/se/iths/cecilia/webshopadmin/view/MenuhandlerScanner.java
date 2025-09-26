@@ -16,7 +16,6 @@ public class MenuhandlerScanner implements UIInterface {
         menuOptions = setMenuOptions();
     }
 
-    @Override
     public void printMenu() {
         for (int i = 0; i < menuOptions.toArray().length; i++) {
             System.out.println("[" + (i + 1) + "] " + menuOptions.get(i));

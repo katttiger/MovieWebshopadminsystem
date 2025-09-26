@@ -41,16 +41,14 @@ public class ProductDAO implements ProductDAOInterface {
             }
 
             switch (userInput) {
-                case 1 -> newProduct = new Movie();
-                case 2 -> newProduct = new Candy();
-                case 3 -> newProduct = new StuffedAnimal();
+                case 1 -> newProduct = createNewProduct(new Movie());
+                case 2 -> newProduct = createNewProduct(new Candy());
+                case 3 -> newProduct = createNewProduct(new StuffedAnimal());
             }
         } while (userInput < 1 || userInput > 3);
 
-        createNewProduct(newProduct);
-
-        System.out.println("You have added a new " + newProduct.category());
         products.add(newProduct);
+        System.out.println("Object of type " + newProduct.category() + " has been added to");
     }
 
     public Product createNewProduct(Product newProduct) {
@@ -110,8 +108,11 @@ public class ProductDAO implements ProductDAOInterface {
         System.out.println("Below are our currents products: ");
         //call a method from filehandling logic and store it
         for (int i = 0; i < products.toArray().length; i++) {
-            System.out.println("\n------------\n");
-            System.out.println(products.get(i).toString());
+            System.out.println("""
+                    
+                    \n------------\n
+                    
+                    """ + products.get(i).toString());
         }
     }
 
