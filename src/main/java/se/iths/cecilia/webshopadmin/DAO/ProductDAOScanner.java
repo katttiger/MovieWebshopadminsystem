@@ -57,12 +57,11 @@ public class ProductDAOScanner implements ProductDAOInterface {
         do {
             System.out.println("Enter name: ");
             newProduct.setName(sc.nextLine());
-        } while (newProduct.getName().isEmpty() || newProduct.getName().isBlank());
-
+        } while (newProduct.getName().isBlank());
         do {
             System.out.println("Enter description: ");
             newProduct.setDescription(sc.nextLine());
-        } while (newProduct.getDescription().isEmpty() || newProduct.getDescription().isBlank());
+        } while (newProduct.getDescription().isBlank());
 
         do {
             newProduct.setArticleNumber(determineArticleNumberIsValid());
@@ -77,10 +76,15 @@ public class ProductDAOScanner implements ProductDAOInterface {
 
     public double determinePriceIsValid() {
         System.out.println("Enter price (SEK): ");
-        double pendingPrice = sc.hasNextDouble() ? sc.nextDouble() : -1;
-        sc.nextLine();
-        if (pendingPrice < 1) {
-            System.out.println("Price must be a positive number.");
+        double pendingPrice = 0;
+        try {
+            pendingPrice = sc.hasNextDouble() ? sc.nextDouble() : -1;
+            sc.nextLine();
+            if (pendingPrice < 0) {
+                System.out.println("Price must be a positive number.");
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please try again.");
         }
         return pendingPrice;
     }

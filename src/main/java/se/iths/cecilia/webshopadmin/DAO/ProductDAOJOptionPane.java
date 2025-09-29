@@ -9,7 +9,6 @@ import se.iths.cecilia.webshopadmin.models.StuffedAnimal;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProductDAOJOptionPane implements ProductDAOInterface {
@@ -26,122 +25,152 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
 
     @Override
     public void addProduct() {
-//        //add menu that asks what type of product should be added
-//        int userInput = -1;
-//        Product newProduct = null;
-//        do {
-//            System.out.println("""
-//                    What type of product do you want to add?
-//                    1. Movie
-//                    2. Candy
-//                    3. Stuffed animal""");
-//
-//            userInput = errorcheck.checkIntegerInput();
-//            if (userInput < 1 || userInput > 3) {
-//                System.out.println("Input must be between 1 and 3");
-//            }
-//
-//            switch (userInput) {
-//                case 1 -> newProduct = createNewProduct(new Movie());
-//                case 2 -> newProduct = createNewProduct(new Candy());
-//                case 3 -> newProduct = createNewProduct(new StuffedAnimal());
-//            }
-//        } while (userInput < 1 || userInput > 3);
-//
-//        products.add(newProduct);
-//        System.out.println("Object of type " + newProduct.category() + " has been added to");
+        try {
+            String anwser = JOptionPane.showInputDialog("""
+                    What type of product do you want to add?
+                    1. Movie
+                    2. Candy
+                    3. Stuffed animal""");
+
+            Product newProduct = null;
+            int userChoice = Integer.parseInt(anwser);
+            if (userChoice < 1 || userChoice > 3) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Input must be between 1 and 3. Try again.");
+            } else {
+                switch (userChoice) {
+                    case 1 -> newProduct = createNewProduct(new Movie());
+                    case 2 -> newProduct = createNewProduct(new Candy());
+                    case 3 -> newProduct = createNewProduct(new StuffedAnimal());
+                }
+                //        products.add(newProduct);
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Object of type" + newProduct.category() + " has been added to"
+                );
+                products.add(newProduct);
+            }
+
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Invalid format. Please try again."
+            );
+        }
     }
 
-//    public Product createNewProduct(Product newProduct) {
-//        System.out.println("You want to add a " + newProduct.category());
-//
-//        do {
-//            System.out.println("Enter name: ");
-//            newProduct.setName(sc.nextLine());
-//        } while (newProduct.getName().isEmpty() || newProduct.getName().isBlank());
-//
-//        do {
-//            System.out.println("Enter description: ");
-//            newProduct.setDescription(sc.nextLine());
-//        } while (newProduct.getDescription().isEmpty() || newProduct.getDescription().isBlank());
-//
-//        do {
-//            newProduct.setArticleNumber(determineArticleNumberIsValid());
-//        } while (newProduct.getArticleNumber() == -1);
-//
-//        do {
-//            newProduct.setPrice(determinePriceIsValid());
-//        } while (newProduct.getPrice() < 0);
-//
-//        return newProduct;
-//    }
-//
-//    public double determinePriceIsValid() {
-//        System.out.println("Enter price (SEK): ");
-//        double pendingPrice = sc.hasNextDouble() ? sc.nextDouble() : -1;
-//        sc.nextLine();
-//        if (pendingPrice < 1) {
-//            System.out.println("Price must be a positive number.");
-//        }
-//        return pendingPrice;
-//    }
+    public Product createNewProduct(Product newProduct) {
+        JOptionPane.showMessageDialog(
+                null,
+                "You want to add a " + newProduct.category() + "\n Press enter to continue.");
+        do {
+            newProduct.setName(JOptionPane.showInputDialog(
+                    "Step 1 of 4:\n Enter name of product: "));
+        } while (newProduct.getName().isBlank());
+        do {
+            newProduct.setDescription(
+                    JOptionPane.showInputDialog(
+                            "Step 2 of 4:\n Enter description of product: "
+                    )
+            );
+        } while (newProduct.getDescription().isBlank());
+        do {
+            newProduct.setArticleNumber(determineArticleNumberIsValid());
+        } while (newProduct.getArticleNumber() == -1);
+        do {
+            newProduct.setPrice(determinePriceIsValid());
+        } while (newProduct.getPrice() < 0);
+        return newProduct;
+    }
 
-//    public int determineArticleNumberIsValid() {
-//        System.out.println("Enter article number: ");
-//        int pendingArticleNumber;
-//        do {
-//            pendingArticleNumber = errorcheck.checkIntegerInput();
-//            pendingArticleNumber = errorcheck.isNumberPositive(pendingArticleNumber);
-//        }
-//        while (pendingArticleNumber < 1);
-//
-//        for (int i = 0; i < products.toArray().length; i++) {
-//            if (pendingArticleNumber == products.get(i).getArticleNumber()) {
-//                System.out.println("Article number has been taken. Please try again.");
-//                pendingArticleNumber = -1;
-//            }
-//        }
-//        return pendingArticleNumber;
-//    }
+    private int determineArticleNumberIsValid() {
+        int pendingArticleNumber = 0;
+        try {
+            pendingArticleNumber = Integer.parseInt(
+                    JOptionPane.showInputDialog(
+                            "Step 3 of 4:\n Enter article number of product: "
+                    )
+            );
+
+            for (int i = 0; i < products.toArray().length; i++) {
+                if (pendingArticleNumber == products.get(i).getArticleNumber()) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Article number has aldready been taken. Please try again;");
+                    pendingArticleNumber = -1;
+                }
+            }
+        } catch (NumberFormatException | HeadlessException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Invalid format. Please try again.");
+            pendingArticleNumber = -1;
+        }
+        return pendingArticleNumber;
+    }
+
+    private double determinePriceIsValid() {
+        double pendingPrice = 0;
+        try {
+            pendingPrice = Integer.parseInt(
+                    JOptionPane.showInputDialog(
+                            "Step 4 of 4:\n Enter price of product: "
+                    )
+            );
+            if (pendingPrice < 0) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Price must be a positive number.");
+            }
+        } catch (NumberFormatException | HeadlessException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Invalid input. Please try again."
+            );
+            pendingPrice = -1;
+        }
+        return pendingPrice;
+    }
 
     @Override
     public void listAllProducts() {
         JOptionPane.showMessageDialog(
                 null,
-                "Below are our currents products: " + Arrays.toString(products.toArray()) + "\n----------\n");
+                ("Below are our currents products:" +
+                        " \n%s").formatted(products.toArray().toString()));
     }
 
     @Override
     public void searchForProduct() {
         try {
-            do {
-                int userInput = -1;
-                String returned = "";
+            int userInput = 0;
+            String returned = "";
+            String answer = JOptionPane.showInputDialog(
+                    "Please enter the article number you want to search for: ");
+            userInput = Integer.parseInt(answer);
 
-                do {
-                    String answer = JOptionPane.showInputDialog(
-                            "Please enter the article number you want to search for: ");
-                    userInput = Integer.parseInt(answer);
-                } while (userInput < 1);
-                
+            if (userInput != JOptionPane.CANCEL_OPTION) {
                 for (int i = 0; i < products.toArray().length; i++) {
                     if (products.get(i).getArticleNumber() == userInput) {
                         returned = products.get(i).toString();
                     }
-
-                    if (!returned.isBlank() || !returned.isEmpty()) {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Your product: \n" + returned + "\n----------");
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "No product with articlenumber " + userInput + " was found.");
-                    }
                 }
-            } while (true);
+
+                if (!returned.isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Your product: \n" + returned + "\n----------");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "No product with articlenumber " + userInput + " was found.");
+                }
+            }
         } catch (HeadlessException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid format. Try again");
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Invalid format. Try again");
         }
     }
 
