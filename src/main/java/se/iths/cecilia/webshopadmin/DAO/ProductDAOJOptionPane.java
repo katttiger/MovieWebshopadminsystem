@@ -8,19 +8,20 @@ import se.iths.cecilia.webshopadmin.models.StuffedAnimal;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAOJOptionPane implements ProductDAOInterface {
     //DATA ACCESS TO DB
     //G : LIST WITH PRODUCTS
     private List<Product> products;
-    Errorcheck errorcheck;
+    private Errorcheck errorcheck;
+    private JSONFileHandler jsonFileHandler;
 
     //VG : FILEHANDLING (STREAM INPUT AND OUTPUT)
     public ProductDAOJOptionPane() {
-        this.products = seedData();
         this.errorcheck = new Errorcheck();
+        this.jsonFileHandler = new JSONFileHandler();
+        jsonFileHandler.checkThatFileExists();
     }
 
     @Override
@@ -44,12 +45,12 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                     case 2 -> newProduct = createNewProduct(new Candy());
                     case 3 -> newProduct = createNewProduct(new StuffedAnimal());
                 }
+                jsonFileHandler.fileWriter(newProduct);
                 //        products.add(newProduct);
                 JOptionPane.showMessageDialog(
                         null,
-                        "Object of type" + newProduct.category() + " has been added to"
+                        "Object has been added to"
                 );
-                products.add(newProduct);
             }
 
         } catch (HeadlessException | NumberFormatException e) {
@@ -59,6 +60,7 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
             );
         }
     }
+
 
     public Product createNewProduct(Product newProduct) {
         JOptionPane.showMessageDialog(
@@ -93,14 +95,14 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                     )
             );
 
-            for (int i = 0; i < products.toArray().length; i++) {
-                if (pendingArticleNumber == products.get(i).getArticleNumber()) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Article number has aldready been taken. Please try again;");
-                    pendingArticleNumber = -1;
-                }
-            }
+//            for (int i = 0; i < products.toArray().length; i++) {
+//                if (pendingArticleNumber == products.get(i).getArticleNumber()) {
+//                    JOptionPane.showMessageDialog(
+//                            null,
+//                            "Article number has aldready been taken. Please try again;");
+//                    pendingArticleNumber = -1;
+//                }
+//            }
         } catch (NumberFormatException | HeadlessException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -135,29 +137,34 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
 
     @Override
     public void listAllProducts() {
+        List<Product> products = jsonFileHandler.retrieveAllItemsInJsonFile();
+
+        if (products != null) {
+            for (Product product : products) {
+                System.out.println(product);
+            }
+        } else {
+            System.out.println("There are no products in the json file.");
+        }
+
         JOptionPane.showMessageDialog(
                 null,
-                ("Below are our currents products:" +
-                        " \n%s").formatted(products.toArray().toString()));
+                "Your products: %s".formatted(products.toString())
+        );
     }
 
     @Override
     public void searchForProduct() {
         try {
             int userInput = 0;
-            String returned = "";
+            String returned = null;
             String answer = JOptionPane.showInputDialog(
                     "Please enter the article number you want to search for: ");
             userInput = Integer.parseInt(answer);
 
             if (userInput != JOptionPane.CANCEL_OPTION) {
-                for (int i = 0; i < products.toArray().length; i++) {
-                    if (products.get(i).getArticleNumber() == userInput) {
-                        returned = products.get(i).toString();
-                    }
-                }
-
-                if (!returned.isEmpty()) {
+                returned = jsonFileHandler.retrieveItemFromJsonFile(userInput);
+                if (!returned.isBlank()) {
                     JOptionPane.showMessageDialog(
                             null,
                             "Your product: \n" + returned + "\n----------");
@@ -174,35 +181,5 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
         }
     }
 
-    //SEEDDATA FOR IMPLEMENTATION WITH LIST
-    public List<Product> seedData() {
-        Candy ferraribilar = new Candy();
-        ferraribilar.setName("Ferrari Orginal");
-        ferraribilar.setArticleNumber(12);
-        ferraribilar.setPrice(199);
-        ferraribilar.setDescription("Små ferraribilar av vingummi med hallonsmak.");
-
-        StuffedAnimal sam = new StuffedAnimal();
-        sam.setName("Sam");
-        sam.setArticleNumber(34);
-        sam.setPrice(155);
-        sam.setDescription("En nallebjörn. " +
-                "\n Storlek: ca 25cm (mätt sittande, ca 35 cm i fullängd)" +
-                "\n Material: Polyester" +
-                "\n Varför: Även vuxna kan behöva någon när Imhotep väcks till liv.");
-
-        Movie theMummy = new Movie();
-        theMummy.setName("The Mummy (1999)");
-        theMummy.setArticleNumber(56);
-        theMummy.setDescription("Översteprästen Imhotep blev en gång levande begravd och mumifierad som straff för att ha gjort uppror mot sin farao. Dessutom lades den grymmaste av förbannelser över honom. " +
-                "\n År 1923 störs hans gravkammare, bland annat av en grupp amerikanska arkeologer som är på jakt efter försvunna skatter, och översteprästen vaknar till liv igen. Med sig som vapen för han Egyptens 10 farsoter." +
-                "\n I rollerna: Brendan Fraser, Rachel Weisz, John Hannah");
-
-        products = new ArrayList<>();
-        products.add(ferraribilar);
-        products.add(sam);
-        products.add(theMummy);
-        return products;
-    }
 
 }
