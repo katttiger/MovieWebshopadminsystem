@@ -1,6 +1,10 @@
 package se.iths.cecilia.webshopadmin.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class StuffedAnimal extends Product {
+
+    @JsonProperty("category")
     private String category;
 
     public StuffedAnimal() {

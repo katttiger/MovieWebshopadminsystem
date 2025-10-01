@@ -1,9 +1,18 @@
 package se.iths.cecilia.webshopadmin.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public abstract class Product {
+
+    @JsonProperty("articleNumber")
     private int articleNumber;
+
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("price")
     private double price;
+
+    @JsonProperty("description")
     private String description;
 
     public String category() {

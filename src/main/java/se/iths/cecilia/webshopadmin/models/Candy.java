@@ -1,6 +1,9 @@
 package se.iths.cecilia.webshopadmin.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Candy extends Product {
+    @JsonProperty("category")
     private String category;
 
     public Candy() {

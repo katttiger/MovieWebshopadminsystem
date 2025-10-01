@@ -49,7 +49,7 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                 //        products.add(newProduct);
                 JOptionPane.showMessageDialog(
                         null,
-                        "Object has been added to"
+                        "Product has been added."
                 );
             }
 
@@ -60,7 +60,6 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
             );
         }
     }
-
 
     public Product createNewProduct(Product newProduct) {
         JOptionPane.showMessageDialog(
@@ -137,20 +136,22 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
 
     @Override
     public void listAllProducts() {
-        List<Product> products = jsonFileHandler.retrieveAllItemsInJsonFile();
-
-        if (products != null) {
-            for (Product product : products) {
-                System.out.println(product);
-            }
-        } else {
-            System.out.println("There are no products in the json file.");
+        List<String> productStrings = jsonFileHandler.retrieveAllItemsInJsonFile();
+        for (String s : productStrings) {
+            s.trim();
+            s.splitWithDelimiters(String.valueOf(1), '}');
         }
-
-        JOptionPane.showMessageDialog(
-                null,
-                "Your products: %s".formatted(products.toString())
-        );
+        if (productStrings != null) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Your products: %s".formatted(productStrings)
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "There are no products in the json file."
+            );
+        }
     }
 
     @Override
@@ -180,6 +181,5 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                     "Invalid format. Try again");
         }
     }
-
 
 }

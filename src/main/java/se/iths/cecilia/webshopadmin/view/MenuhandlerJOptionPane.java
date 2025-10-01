@@ -19,7 +19,7 @@ public class MenuhandlerJOptionPane implements UIInterface {
     @Override
     public int userMenuChoice() {
         int choice = 0;
-        String answer = "";
+        String answer;
         do {
             answer = JOptionPane.showInputDialog(
                     "1. Add product" +
@@ -27,21 +27,11 @@ public class MenuhandlerJOptionPane implements UIInterface {
                             "\n 3. Search for product" +
                             "\n 4. Close application");
             try {
-
-                choice = Integer.parseInt(answer);
-                switch (choice) {
-                    case 1 -> {
-                        choice = 1;
-                    }
-                    case 2 -> {
-                        choice = 2;
-                    }
-                    case 3 -> {
-                        choice = 3;
-                    }
-                    case 4 -> {
-                        choice = 4;
-                    }
+                switch (Integer.parseInt(answer)) {
+                    case 1 -> choice = 1;
+                    case 2 -> choice = 2;
+                    case 3 -> choice = 3;
+                    case 4 -> choice = 4;
                     default -> {
                         JOptionPane.showMessageDialog(
                                 null,

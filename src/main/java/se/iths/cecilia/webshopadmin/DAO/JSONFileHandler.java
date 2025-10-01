@@ -1,6 +1,5 @@
 package se.iths.cecilia.webshopadmin.DAO;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import se.iths.cecilia.webshopadmin.models.Product;
 
@@ -8,45 +7,63 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JSONFileHandler {
 
     private ObjectMapper mapper;
-    final private String filePath = "data/products.json";
+    private String filePath = "products.json";
+    List<Product> products;
 
     public JSONFileHandler() {
         this.mapper = new ObjectMapper();
+        this.products = new ArrayList<>();
     }
 
     public String retrieveItemFromJsonFile(int articlenumber) {
         String product = null;
+        Path path = Paths.get(filePath);
         try {
-            product = mapper.readValue(filePath, Product.class).toString();
+            File file = new File(path.toString());
+            Product[] productArray = mapper.readValue(file, Product[].class);
+            products = Arrays.stream(productArray).toList();
         } catch (IOException e) {
             System.out.println("Something went wrong.");
         }
         return product;
     }
 
-    public List<Product> retrieveAllItemsInJsonFile() {
-        List<Product> products = null;
+    public List<String> retrieveAllItemsInJsonFile() {
+        List<String> items = new ArrayList<>();
         try {
-            products = mapper.readValue(filePath, new TypeReference<List<Product>>() {
-            });
-        } catch (IOException | NullPointerException e) {
-            System.out.println("The stream is wrong or the list is null.");
+            mapper.readValue(filePath, Product.class);
+            System.out.println("All is well");
+
+        } catch (IOException e) {
+            System.out.println("The stream is wrong: " + e.getMessage()
+                    + "\n" + e.getStackTrace().toString());
         } catch (NoClassDefFoundError e) {
-            System.out.println("I could not find the proper class.");
+            System.out.println("I could not find the proper class at "
+                    + e.getMessage() + "\n"
+                    + e.getStackTrace().toString());
+        } catch (NullPointerException e) {
+            System.out.println("The list is null or empty: "
+                    + e.getMessage() + "\n"
+                    + e.getStackTrace().toString());
         }
-        return products;
+        return items;
     }
 
     public void fileWriter(Product product) {
         try {
             mapper.writeValue(new File(filePath), product);
+            System.out.println("Product has been written to " + filePath);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage().toString());
+            System.out.println("Something went wrong when adding your product.");
+            System.out.println(e.getMessage());
         }
     }
 
