@@ -2,7 +2,7 @@ package se.iths.cecilia.webshopadmin.controller;
 
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOInterface;
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOScanner;
-import se.iths.cecilia.webshopadmin.view.MenuhandlerJOptionPane;
+import se.iths.cecilia.webshopadmin.view.MenuhandlerScanner;
 import se.iths.cecilia.webshopadmin.view.UIInterface;
 
 import java.util.Scanner;
@@ -12,7 +12,7 @@ public class ControllerScanner implements ControllerInterface {
     private ProductDAOInterface productDAO;
 
     public ControllerScanner() {
-        this.menuhandler = new MenuhandlerJOptionPane();
+        this.menuhandler = new MenuhandlerScanner();
         this.productDAO = new ProductDAOScanner();
     }
 

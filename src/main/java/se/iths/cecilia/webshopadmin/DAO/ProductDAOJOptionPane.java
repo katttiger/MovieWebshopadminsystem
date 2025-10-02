@@ -1,6 +1,5 @@
 package se.iths.cecilia.webshopadmin.DAO;
 
-import se.iths.cecilia.webshopadmin.controller.Errorcheck;
 import se.iths.cecilia.webshopadmin.models.Candy;
 import se.iths.cecilia.webshopadmin.models.Movie;
 import se.iths.cecilia.webshopadmin.models.Product;
@@ -11,17 +10,12 @@ import java.awt.*;
 import java.util.List;
 
 public class ProductDAOJOptionPane implements ProductDAOInterface {
-    //DATA ACCESS TO DB
-    //G : LIST WITH PRODUCTS
+
     private List<Product> products;
-    private Errorcheck errorcheck;
     private JSONFileHandler jsonFileHandler;
 
-    //VG : FILEHANDLING (STREAM INPUT AND OUTPUT)
     public ProductDAOJOptionPane() {
-        this.errorcheck = new Errorcheck();
         this.jsonFileHandler = new JSONFileHandler();
-//        jsonFileHandler.checkThatFileExists();
     }
 
     @Override
