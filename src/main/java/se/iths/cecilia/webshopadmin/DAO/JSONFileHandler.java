@@ -1,69 +1,80 @@
 package se.iths.cecilia.webshopadmin.DAO;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import se.iths.cecilia.webshopadmin.models.Candy;
+import se.iths.cecilia.webshopadmin.models.Movie;
 import se.iths.cecilia.webshopadmin.models.Product;
+import se.iths.cecilia.webshopadmin.models.StuffedAnimal;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JSONFileHandler {
 
     private ObjectMapper mapper;
-    private String filePath = "products.json";
-    List<Product> products;
+    private final String filePath = "products.json";
+    private List<Product> productList;
+    File file;
 
     public JSONFileHandler() {
         this.mapper = new ObjectMapper();
-        this.products = new ArrayList<>();
+        this.productList = new ArrayList<>();
+        this.file = new File(filePath);
     }
 
     public String retrieveItemFromJsonFile(int articlenumber) {
-        String product = null;
-        Path path = Paths.get(filePath);
-        try {
-            File file = new File(path.toString());
-            Product[] productArray = mapper.readValue(file, Product[].class);
-            products = Arrays.stream(productArray).toList();
-        } catch (IOException e) {
-            System.out.println("Something went wrong.");
+        Product product = null;
+        checkThatFileExists();
+        productList = retrieveAllItemsInJsonFile();
+
+        for (int i = 0; i < productList.toArray().length; i++) {
+            if (productList.get(i).getArticleNumber() == articlenumber) {
+                return productList.get(i).toString();
+            } else {
+                return "Product with articlenumber " + articlenumber + " does not exist";
+            }
         }
-        return product;
+        productList.clear();
+        return product.toString();
     }
 
-    public List<String> retrieveAllItemsInJsonFile() {
-        List<String> items = new ArrayList<>();
+    public List<Product> retrieveAllItemsInJsonFile() {
         try {
-            mapper.readValue(filePath, Product.class);
-            System.out.println("All is well");
+            checkThatFileExists();
+            productList.clear();
+            List<Product> loadedList = mapper.readValue(
+                    file,
+                    new TypeReference<>() {
+                    });
+            productList.addAll(loadedList);
 
         } catch (IOException e) {
             System.out.println("The stream is wrong: " + e.getMessage()
-                    + "\n" + e.getStackTrace().toString());
-        } catch (NoClassDefFoundError e) {
-            System.out.println("I could not find the proper class at "
-                    + e.getMessage() + "\n"
-                    + e.getStackTrace().toString());
-        } catch (NullPointerException e) {
-            System.out.println("The list is null or empty: "
-                    + e.getMessage() + "\n"
-                    + e.getStackTrace().toString());
+                    + "\n" + e.getStackTrace());
         }
-        return items;
+        return productList;
     }
 
-    public void fileWriter(Product product) {
+    public <T> void addNewProductToJsonFile(T product) {
         try {
-            mapper.writeValue(new File(filePath), product);
-            System.out.println("Product has been written to " + filePath);
+            checkThatFileExists();
+            productList = retrieveAllItemsInJsonFile();
+            if (product instanceof Movie) {
+                productList.add((Movie) product);
+            } else if (product instanceof Candy) {
+                productList.add((Candy) product);
+            } else {
+                productList.add((StuffedAnimal) product);
+            }
+            mapper.writeValue(file, productList);
+            productList.clear();
         } catch (IOException e) {
-            System.out.println("Something went wrong when adding your product.");
-            System.out.println(e.getMessage());
+            System.out.println("Could not save product to JSON file: " + e.getMessage());
         }
     }
 

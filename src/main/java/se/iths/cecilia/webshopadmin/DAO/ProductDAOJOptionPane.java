@@ -21,32 +21,39 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
     public ProductDAOJOptionPane() {
         this.errorcheck = new Errorcheck();
         this.jsonFileHandler = new JSONFileHandler();
-        jsonFileHandler.checkThatFileExists();
+//        jsonFileHandler.checkThatFileExists();
     }
 
     @Override
     public void addProduct() {
         try {
-            String anwser = JOptionPane.showInputDialog("""
+            String answer = JOptionPane.showInputDialog("""
                     What type of product do you want to add?
                     1. Movie
                     2. Candy
                     3. Stuffed animal""");
 
             Product newProduct = null;
-            int userChoice = Integer.parseInt(anwser);
+            int userChoice = Integer.parseInt(answer);
             if (userChoice < 1 || userChoice > 3) {
                 JOptionPane.showMessageDialog(
                         null,
                         "Input must be between 1 and 3. Try again.");
             } else {
                 switch (userChoice) {
-                    case 1 -> newProduct = createNewProduct(new Movie());
-                    case 2 -> newProduct = createNewProduct(new Candy());
-                    case 3 -> newProduct = createNewProduct(new StuffedAnimal());
+                    case 1 -> {
+                        newProduct = createNewProduct(new Movie());
+                        jsonFileHandler.addNewProductToJsonFile((Movie) newProduct);
+                    }
+                    case 2 -> {
+                        newProduct = createNewProduct(new Candy());
+                        jsonFileHandler.addNewProductToJsonFile((Candy) newProduct);
+                    }
+                    case 3 -> {
+                        newProduct = createNewProduct(new StuffedAnimal());
+                        jsonFileHandler.addNewProductToJsonFile((StuffedAnimal) newProduct);
+                    }
                 }
-                jsonFileHandler.fileWriter(newProduct);
-                //        products.add(newProduct);
                 JOptionPane.showMessageDialog(
                         null,
                         "Product has been added."
@@ -62,9 +69,6 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
     }
 
     public Product createNewProduct(Product newProduct) {
-        JOptionPane.showMessageDialog(
-                null,
-                "You want to add a " + newProduct.category() + "\n Press enter to continue.");
         do {
             newProduct.setName(JOptionPane.showInputDialog(
                     "Step 1 of 4:\n Enter name of product: "));
@@ -94,14 +98,15 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                     )
             );
 
-//            for (int i = 0; i < products.toArray().length; i++) {
-//                if (pendingArticleNumber == products.get(i).getArticleNumber()) {
-//                    JOptionPane.showMessageDialog(
-//                            null,
-//                            "Article number has aldready been taken. Please try again;");
-//                    pendingArticleNumber = -1;
-//                }
-//            }
+            products = jsonFileHandler.retrieveAllItemsInJsonFile();
+            for (int i = 0; i < products.toArray().length; i++) {
+                if (pendingArticleNumber == products.get(i).getArticleNumber()) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Article number has aldready been taken. Please try again;");
+                    pendingArticleNumber = -1;
+                }
+            }
         } catch (NumberFormatException | HeadlessException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -136,20 +141,16 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
 
     @Override
     public void listAllProducts() {
-        List<String> productStrings = jsonFileHandler.retrieveAllItemsInJsonFile();
-        for (String s : productStrings) {
-            s.trim();
-            s.splitWithDelimiters(String.valueOf(1), '}');
-        }
-        if (productStrings != null) {
+        products = jsonFileHandler.retrieveAllItemsInJsonFile();
+        if (products != null) {
             JOptionPane.showMessageDialog(
                     null,
-                    "Your products: %s".formatted(productStrings)
+                    "Your products: " + products.toString()
             );
         } else {
             JOptionPane.showMessageDialog(
                     null,
-                    "There are no products in the json file."
+                    "There are no products registered in our system."
             );
         }
     }
@@ -168,11 +169,7 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                 if (!returned.isBlank()) {
                     JOptionPane.showMessageDialog(
                             null,
-                            "Your product: \n" + returned + "\n----------");
-                } else {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "No product with articlenumber " + userInput + " was found.");
+                            returned + "\n----------");
                 }
             }
         } catch (HeadlessException | NumberFormatException e) {

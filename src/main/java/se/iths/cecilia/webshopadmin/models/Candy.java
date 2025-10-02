@@ -3,16 +3,18 @@ package se.iths.cecilia.webshopadmin.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Candy extends Product {
+
     @JsonProperty("category")
     private String category;
+
+    public Candy(int articleNumber, String name, double price, String description) {
+        super(articleNumber, name, price, description);
+    }
 
     public Candy() {
         this.category = "Candy";
     }
 
-    public Candy(String category) {
-        this.category = category;
-    }
 
     @Override
     public String toString() {

@@ -29,11 +29,9 @@ public class ControllerJOptionPane implements ControllerInterface {
             }
             case 2 -> {
                 productDAO.listAllProducts();
-
             }
             case 3 -> {
                 productDAO.searchForProduct();
-
             }
             case 4 -> System.out.println("Closing application");
         }
