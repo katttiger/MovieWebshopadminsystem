@@ -24,15 +24,9 @@ public class ControllerJOptionPane implements ControllerInterface {
 
     public void actionWithJOptionPane(int userRequest) {
         switch (userRequest) {
-            case 1 -> {
-                productDAO.addProduct();
-            }
-            case 2 -> {
-                productDAO.listAllProducts();
-            }
-            case 3 -> {
-                productDAO.searchForProduct();
-            }
+            case 1 -> productDAO.addProduct();
+            case 2 -> productDAO.listAllProducts();
+            case 3 -> productDAO.searchForProduct();
             case 4 -> System.out.println("Closing application");
         }
     }

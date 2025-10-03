@@ -3,6 +3,7 @@ package se.iths.cecilia.webshopadmin;
 import se.iths.cecilia.webshopadmin.controller.ControllerInterface;
 import se.iths.cecilia.webshopadmin.controller.ControllerJOptionPane;
 import se.iths.cecilia.webshopadmin.controller.ControllerScanner;
+import se.iths.cecilia.webshopadmin.view.UI;
 
 import java.util.Scanner;
 
@@ -12,31 +13,31 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        //TODO: FIX MENY
-
-        System.out.println("""
-                Chose your interface:
-                [1] Scanner
-                [2] JOPtionPane
-                [3] Close application""");
-
+        UI ui = new UI();
+        System.out.println(ui.menu());
         int request;
+
         do {
-            System.out.println("Enter your choice");
+            System.out.println("Enter your choice: ");
             request = sc.hasNextInt() ? sc.nextInt() : 0;
             sc.nextLine();
+
             switch (request) {
                 case 1 -> {
-                    ControllerInterface controller = new ControllerScanner();
-                    request = controller.Start();
+                    do {
+                        ControllerInterface controller = new ControllerScanner();
+                        request = controller.Start();
+                    } while (request != 4);
                 }
                 case 2 -> {
-                    ControllerInterface controller = new ControllerJOptionPane();
-                    request = controller.Start();
+                    do {
+                        ControllerInterface controller = new ControllerJOptionPane();
+                        request = controller.Start();
+                    } while (request != 4);
                 }
                 case 3 -> {
                     request = 4;
+                    sc.close();
                 }
                 default -> System.out.println("Invalid choice.");
             }

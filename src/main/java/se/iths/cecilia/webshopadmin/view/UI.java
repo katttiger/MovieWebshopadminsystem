@@ -17,8 +17,7 @@ public class UI implements UIInterface {
                 Chose your interface:
                 [1] Scanner
                 [2] JOPtionPane
-                [3] Close application
-                Enter your choice:"""
+                [3] Close application"""
                 ;
     }
 }
