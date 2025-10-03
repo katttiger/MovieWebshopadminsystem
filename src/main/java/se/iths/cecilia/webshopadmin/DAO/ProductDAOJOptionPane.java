@@ -1,5 +1,6 @@
 package se.iths.cecilia.webshopadmin.DAO;
 
+import se.iths.cecilia.webshopadmin.DAO.filehandler.JSONFileHandler;
 import se.iths.cecilia.webshopadmin.models.Candy;
 import se.iths.cecilia.webshopadmin.models.Movie;
 import se.iths.cecilia.webshopadmin.models.Product;

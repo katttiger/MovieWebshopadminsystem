@@ -1,4 +1,4 @@
-package se.iths.cecilia.webshopadmin.view;
+package se.iths.cecilia.webshopadmin.view.menuhandler;
 
 import se.iths.cecilia.webshopadmin.controller.Errorcheck;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuhandlerScanner implements UIInterface {
+public class MenuhandlerScanner implements MenuHandlerInterface {
     private List<String> menuOptions;
     Scanner sc = new Scanner(System.in);
     private Errorcheck errorcheck = new Errorcheck();

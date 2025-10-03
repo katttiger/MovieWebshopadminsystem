@@ -1,4 +1,4 @@
-package se.iths.cecilia.webshopadmin.DAO;
+package se.iths.cecilia.webshopadmin.DAO.filehandler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

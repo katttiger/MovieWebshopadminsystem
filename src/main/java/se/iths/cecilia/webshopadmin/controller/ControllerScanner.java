@@ -2,13 +2,11 @@ package se.iths.cecilia.webshopadmin.controller;
 
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOInterface;
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOScanner;
-import se.iths.cecilia.webshopadmin.view.MenuhandlerScanner;
-import se.iths.cecilia.webshopadmin.view.UIInterface;
-
-import java.util.Scanner;
+import se.iths.cecilia.webshopadmin.view.menuhandler.MenuHandlerInterface;
+import se.iths.cecilia.webshopadmin.view.menuhandler.MenuhandlerScanner;
 
 public class ControllerScanner implements ControllerInterface {
-    private UIInterface menuhandler;
+    private MenuHandlerInterface menuhandler;
     private ProductDAOInterface productDAO;
 
     public ControllerScanner() {
@@ -28,24 +26,18 @@ public class ControllerScanner implements ControllerInterface {
         switch (userRequest) {
             case 1 -> {
                 productDAO.addProduct();
-                returnToMenuPrompt();
             }
             case 2 -> {
                 productDAO.listAllProducts();
-                returnToMenuPrompt();
             }
             case 3 -> {
                 productDAO.searchForProduct();
-                returnToMenuPrompt();
             }
             case 4 -> System.out.println("Closing application");
         }
     }
 
-
     public void returnToMenuPrompt() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Press enter to return to menu.");
-        sc.nextLine();
     }
 }

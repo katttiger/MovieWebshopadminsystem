@@ -2,11 +2,11 @@ package se.iths.cecilia.webshopadmin.controller;
 
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOInterface;
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOJOptionPane;
-import se.iths.cecilia.webshopadmin.view.MenuhandlerJOptionPane;
-import se.iths.cecilia.webshopadmin.view.UIInterface;
+import se.iths.cecilia.webshopadmin.view.menuhandler.MenuHandlerInterface;
+import se.iths.cecilia.webshopadmin.view.menuhandler.MenuhandlerJOptionPane;
 
 public class ControllerJOptionPane implements ControllerInterface {
-    private UIInterface menuhandler;
+    private MenuHandlerInterface menuhandler;
     private ProductDAOInterface productDAO;
 
     public ControllerJOptionPane() {

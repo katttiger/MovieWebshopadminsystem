@@ -1,7 +1,10 @@
 package se.iths.cecilia.webshopadmin.view;
 
 public interface UIInterface {
-    int userMenuChoice();
+    public String prompt(String message);
 
-    void printMenu();
+    public void info(String message);
+
+    public String menu();
+
 }

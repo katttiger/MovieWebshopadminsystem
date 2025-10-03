@@ -12,16 +12,20 @@ public class Main {
 
     public static void main(String[] args) {
 
+
+        //TODO: FIX MENY
+
         System.out.println("""
                 Chose your interface:
                 [1] Scanner
                 [2] JOPtionPane
-                [3] Close application
-                Enter your choice:""");
+                [3] Close application""");
 
         int request;
         do {
-            request = sc.nextInt();
+            System.out.println("Enter your choice");
+            request = sc.hasNextInt() ? sc.nextInt() : 0;
+            sc.nextLine();
             switch (request) {
                 case 1 -> {
                     ControllerInterface controller = new ControllerScanner();
@@ -34,8 +38,8 @@ public class Main {
                 case 3 -> {
                     request = 4;
                 }
+                default -> System.out.println("Invalid choice.");
             }
         } while (request != 4);
     }
 }
-
