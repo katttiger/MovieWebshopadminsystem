@@ -28,14 +28,19 @@ public class JSONFileHandler {
 
     public String retrieveItemFromJsonFile(int articlenumber) {
         productList = retrieveAllItemsInJsonFile();
-        for (int i = 0; i < productList.toArray().length; i++) {
-            if (productList.get(i).getArticleNumber() == articlenumber) {
-                mockProduct = productList.get(i).toString();
-            } else {
-                return "Product with articlenumber " + articlenumber + " does not exist";
+        if (!productList.isEmpty()) {
+            for (int i = 0; i < productList.toArray().length; i++) {
+                if (productList.get(i).getArticleNumber() == articlenumber) {
+                    mockProduct = productList.get(i).toString();
+                }
             }
+        } else {
+            return "List is empty";
         }
         productList.clear();
+        if (mockProduct.equals("null") || mockProduct.isBlank()) {
+            return "Product with articlenumber " + articlenumber + " does not exist.";
+        }
         return mockProduct;
     }
 

@@ -159,14 +159,13 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                     "Please enter the article number you want to search for: ");
             userInput = Integer.parseInt(answer);
 
-            if (userInput != JOptionPane.CANCEL_OPTION) {
-                returned = jsonFileHandler.retrieveItemFromJsonFile(userInput);
-                if (!returned.isBlank()) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            returned + "\n----------");
-                }
+            returned = jsonFileHandler.retrieveItemFromJsonFile(userInput);
+            if (!returned.isBlank()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        returned + "\n----------");
             }
+
         } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(
                     null,
