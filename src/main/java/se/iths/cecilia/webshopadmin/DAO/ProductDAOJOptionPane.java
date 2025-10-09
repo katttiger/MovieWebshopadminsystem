@@ -163,7 +163,7 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
             if (!returned.isBlank()) {
                 JOptionPane.showMessageDialog(
                         null,
-                        returned + "\n----------");
+                        returned);
             }
 
         } catch (HeadlessException | NumberFormatException e) {

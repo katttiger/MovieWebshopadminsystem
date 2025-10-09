@@ -1,19 +1,10 @@
 package se.iths.cecilia.webshopadmin.view.menuhandler;
 
-import se.iths.cecilia.webshopadmin.controller.Errorcheck;
-
 import javax.swing.*;
 
 public class MenuhandlerJOptionPane implements MenuHandlerInterface {
-    private Errorcheck errorcheck;
-
-    public MenuhandlerJOptionPane() {
-        errorcheck = new Errorcheck();
-    }
-
     @Override
     public void printMenu() {
-
     }
 
     @Override

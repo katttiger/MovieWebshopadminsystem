@@ -12,13 +12,11 @@ public class Main {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        UI ui = new UI();
-        System.out.println(ui.menu());
+        UI.info(UI.menu());
         int request;
 
         do {
-            System.out.println("Enter your choice: ");
+            UI.info("Enter your choice: ");
             request = sc.hasNextInt() ? sc.nextInt() : 0;
             sc.nextLine();
 
@@ -39,7 +37,7 @@ public class Main {
                     request = 4;
                     sc.close();
                 }
-                default -> System.out.println("Invalid choice.");
+                default -> UI.info("Invalid choice.");
             }
         } while (request != 4);
     }

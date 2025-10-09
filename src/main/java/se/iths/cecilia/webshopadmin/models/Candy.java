@@ -7,14 +7,9 @@ public class Candy extends Product {
     @JsonProperty("category")
     private String category;
 
-    public Candy(int articleNumber, String name, double price, String description) {
-        super(articleNumber, name, price, description);
-    }
-
     public Candy() {
         this.category = "Candy";
     }
-
 
     @Override
     public String toString() {

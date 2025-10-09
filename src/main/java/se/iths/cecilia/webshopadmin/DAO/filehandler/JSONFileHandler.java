@@ -15,33 +15,32 @@ import java.util.List;
 public class JSONFileHandler {
 
     private ObjectMapper mapper;
-    private final String filePath = "products.json";
     private List<Product> productList;
-    File file;
-    String mockProduct;
+    private final File file;
 
     public JSONFileHandler() {
         this.mapper = new ObjectMapper();
         this.productList = new ArrayList<>();
+        String filePath = "products.json";
         this.file = new File(filePath);
     }
 
     public String retrieveItemFromJsonFile(int articlenumber) {
-        productList = retrieveAllItemsInJsonFile();
-        if (!productList.isEmpty()) {
-            for (int i = 0; i < productList.toArray().length; i++) {
-                if (productList.get(i).getArticleNumber() == articlenumber) {
-                    mockProduct = productList.get(i).toString();
+        String productRetrieved = "List is empty";
+        try {
+            productList = retrieveAllItemsInJsonFile();
+            if (!productList.isEmpty()) {
+                for (int i = 0; i < productList.toArray().length; i++) {
+                    if (productList.get(i).getArticleNumber() == articlenumber) {
+                        productRetrieved = productList.get(i).toString();
+                    }
                 }
             }
-        } else {
-            return "List is empty";
-        }
-        productList.clear();
-        if (mockProduct.equals("null") || mockProduct.isBlank()) {
+            productList.clear();
+        } catch (NullPointerException e) {
             return "Product with articlenumber " + articlenumber + " does not exist.";
         }
-        return mockProduct;
+        return productRetrieved;
     }
 
     public List<Product> retrieveAllItemsInJsonFile() {

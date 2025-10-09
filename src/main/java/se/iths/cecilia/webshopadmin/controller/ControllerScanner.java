@@ -2,6 +2,7 @@ package se.iths.cecilia.webshopadmin.controller;
 
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOInterface;
 import se.iths.cecilia.webshopadmin.DAO.ProductDAOScanner;
+import se.iths.cecilia.webshopadmin.view.UI;
 import se.iths.cecilia.webshopadmin.view.menuhandler.MenuHandlerInterface;
 import se.iths.cecilia.webshopadmin.view.menuhandler.MenuhandlerScanner;
 
@@ -43,8 +44,8 @@ public class ControllerScanner implements ControllerInterface {
     }
 
     public void returnToMenuPrompt() {
+        UI.info("Press enter to return to menu.");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Press enter to return to menu.");
         sc.nextLine();
     }
 }

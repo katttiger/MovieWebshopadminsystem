@@ -1,10 +1,16 @@
 package se.iths.cecilia.webshopadmin.view;
 
 public interface UIInterface {
-    public String prompt(String message);
+    public static String prompt(String message) {
+        return null;
+    }
 
-    public void info(String message);
+    public static void info(String message) {
 
-    public String menu();
+    }
+
+    public static String menu() {
+        return null;
+    }
 
 }
