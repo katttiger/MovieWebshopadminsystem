@@ -1,12 +1,12 @@
 package se.iths.cecilia.webshopadmin.DAO;
 
-import se.iths.cecilia.webshopadmin.DAO.factory.CandyFactory;
-import se.iths.cecilia.webshopadmin.DAO.factory.MovieFactory;
-import se.iths.cecilia.webshopadmin.DAO.factory.ProductFactory;
-import se.iths.cecilia.webshopadmin.DAO.factory.StuffedAnimalFactory;
 import se.iths.cecilia.webshopadmin.DAO.filehandler.JSONFileHandler;
 import se.iths.cecilia.webshopadmin.controller.Errorcheck;
 import se.iths.cecilia.webshopadmin.models.Product;
+import se.iths.cecilia.webshopadmin.models.factory.CandyFactory;
+import se.iths.cecilia.webshopadmin.models.factory.MovieFactory;
+import se.iths.cecilia.webshopadmin.models.factory.ProductFactory;
+import se.iths.cecilia.webshopadmin.models.factory.StuffedAnimalFactory;
 import se.iths.cecilia.webshopadmin.view.UI;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class ProductDAOScanner implements ProductDAOInterface {
     JSONFileHandler jsonFileHandler;
 
     public ProductDAOScanner() {
-        this.jsonFileHandler = new JSONFileHandler();
+        this.jsonFileHandler = JSONFileHandler.getInstance();
     }
 
     @Override

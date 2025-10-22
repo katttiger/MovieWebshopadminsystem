@@ -1,26 +1,27 @@
-package se.iths.cecilia.webshopadmin.DAO.factory;
+package se.iths.cecilia.webshopadmin.models.factory;
 
 import se.iths.cecilia.webshopadmin.DAO.filehandler.JSONFileHandler;
 import se.iths.cecilia.webshopadmin.controller.Errorcheck;
-import se.iths.cecilia.webshopadmin.models.Candy;
+import se.iths.cecilia.webshopadmin.models.Movie;
 import se.iths.cecilia.webshopadmin.models.Product;
 import se.iths.cecilia.webshopadmin.view.UI;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class CandyFactory implements ProductFactory {
+public class MovieFactory extends ProductFactory {
     Scanner sc = new Scanner(System.in);
+    Errorcheck errorcheck;
     JSONFileHandler jsonFileHandler;
     List<Product> products;
 
-    public CandyFactory() {
-        this.jsonFileHandler = new JSONFileHandler();
+    public MovieFactory() {
+        this.jsonFileHandler = JSONFileHandler.getInstance();
     }
 
     @Override
-    public Candy create() {
-        Candy newProduct = new Candy();
+    public Movie createProduct() {
+        Movie newProduct = new Movie();
         do {
             UI.info("Enter name: ");
             newProduct.setName(UI.prompt(sc.nextLine()));
@@ -31,9 +32,9 @@ public class CandyFactory implements ProductFactory {
             newProduct.setDescription(UI.prompt(sc.nextLine()));
         } while (newProduct.getDescription().isBlank());
 
-        do {
-            newProduct.setArticleNumber(determineArticleNumberIsValid());
-        } while (newProduct.getArticleNumber() == -1);
+//        do {
+//            newProduct.setArticleNumber(determineArticleNumberIsValid());
+//        } while (newProduct.getArticleNumber() == -1);
 
         do {
             newProduct.setPrice(determinePriceIsValid());

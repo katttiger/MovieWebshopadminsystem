@@ -16,7 +16,7 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
     private JSONFileHandler jsonFileHandler;
 
     public ProductDAOJOptionPane() {
-        this.jsonFileHandler = new JSONFileHandler();
+        this.jsonFileHandler = JSONFileHandler.getInstance();
     }
 
     @Override
@@ -75,9 +75,9 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
                     )
             );
         } while (newProduct.getDescription().isBlank());
-        do {
-            newProduct.setArticleNumber(determineArticleNumberIsValid());
-        } while (newProduct.getArticleNumber() == -1);
+//        do {
+//            newProduct.setArticleNumber(determineArticleNumberIsValid());
+//        } while (newProduct.getArticleNumber() == -1);
         do {
             newProduct.setPrice(determinePriceIsValid());
         } while (newProduct.getPrice() < 0);

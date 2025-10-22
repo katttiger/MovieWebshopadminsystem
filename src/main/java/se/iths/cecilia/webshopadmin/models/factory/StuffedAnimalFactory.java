@@ -1,27 +1,26 @@
-package se.iths.cecilia.webshopadmin.DAO.factory;
+package se.iths.cecilia.webshopadmin.models.factory;
 
 import se.iths.cecilia.webshopadmin.DAO.filehandler.JSONFileHandler;
 import se.iths.cecilia.webshopadmin.controller.Errorcheck;
-import se.iths.cecilia.webshopadmin.models.Movie;
 import se.iths.cecilia.webshopadmin.models.Product;
+import se.iths.cecilia.webshopadmin.models.StuffedAnimal;
 import se.iths.cecilia.webshopadmin.view.UI;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class MovieFactory implements ProductFactory {
+public class StuffedAnimalFactory extends ProductFactory {
     Scanner sc = new Scanner(System.in);
-    Errorcheck errorcheck;
     JSONFileHandler jsonFileHandler;
     List<Product> products;
 
-    public MovieFactory() {
-        this.jsonFileHandler = new JSONFileHandler();
+    public StuffedAnimalFactory() {
+        this.jsonFileHandler = JSONFileHandler.getInstance();
     }
 
     @Override
-    public Movie create() {
-        Movie newProduct = new Movie();
+    public StuffedAnimal createProduct() {
+        StuffedAnimal newProduct = new StuffedAnimal();
         do {
             UI.info("Enter name: ");
             newProduct.setName(UI.prompt(sc.nextLine()));
@@ -32,15 +31,16 @@ public class MovieFactory implements ProductFactory {
             newProduct.setDescription(UI.prompt(sc.nextLine()));
         } while (newProduct.getDescription().isBlank());
 
-        do {
-            newProduct.setArticleNumber(determineArticleNumberIsValid());
-        } while (newProduct.getArticleNumber() == -1);
-
+//        do {
+//            newProduct.setArticleNumber(determineArticleNumberIsValid());
+//        } while (newProduct.getArticleNumber() == -1);
+//
         do {
             newProduct.setPrice(determinePriceIsValid());
         } while (newProduct.getPrice() < 0);
         return newProduct;
     }
+
 
     public double determinePriceIsValid() {
         UI.info("Enter price (SEK): ");
@@ -75,5 +75,9 @@ public class MovieFactory implements ProductFactory {
         }
         products.clear();
         return pendingArticleNumber;
+
+
     }
+
 }
+

@@ -13,16 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JSONFileHandler {
-
+    private static JSONFileHandler instance;
     private ObjectMapper mapper;
     private List<Product> productList;
     private final File file;
 
-    public JSONFileHandler() {
+    private JSONFileHandler() {
         this.mapper = new ObjectMapper();
         this.productList = new ArrayList<>();
         String filePath = "products.json";
         this.file = new File(filePath);
+    }
+
+    public static JSONFileHandler getInstance() {
+        if (instance == null) {
+            instance = new JSONFileHandler();
+        }
+        return instance;
     }
 
     public String retrieveItemFromJsonFile(int articlenumber) {

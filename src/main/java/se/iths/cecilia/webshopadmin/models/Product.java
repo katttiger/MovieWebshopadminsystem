@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class Product {
 
     @JsonProperty("articleNumber")
-    private int articleNumber;
+    private static int articleNumber;
 
     @JsonProperty("name")
     private String name;

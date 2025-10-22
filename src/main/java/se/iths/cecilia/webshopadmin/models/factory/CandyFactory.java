@@ -1,26 +1,26 @@
-package se.iths.cecilia.webshopadmin.DAO.factory;
+package se.iths.cecilia.webshopadmin.models.factory;
 
 import se.iths.cecilia.webshopadmin.DAO.filehandler.JSONFileHandler;
 import se.iths.cecilia.webshopadmin.controller.Errorcheck;
+import se.iths.cecilia.webshopadmin.models.Candy;
 import se.iths.cecilia.webshopadmin.models.Product;
-import se.iths.cecilia.webshopadmin.models.StuffedAnimal;
 import se.iths.cecilia.webshopadmin.view.UI;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class StuffedAnimalFactory implements ProductFactory {
+public class CandyFactory extends ProductFactory {
     Scanner sc = new Scanner(System.in);
     JSONFileHandler jsonFileHandler;
     List<Product> products;
 
-    public StuffedAnimalFactory() {
-        this.jsonFileHandler = new JSONFileHandler();
+    public CandyFactory() {
+        this.jsonFileHandler = JSONFileHandler.getInstance();
     }
 
     @Override
-    public StuffedAnimal create() {
-        StuffedAnimal newProduct = new StuffedAnimal();
+    public Candy createProduct() {
+        Candy newProduct = new Candy();
         do {
             UI.info("Enter name: ");
             newProduct.setName(UI.prompt(sc.nextLine()));
@@ -74,9 +74,5 @@ public class StuffedAnimalFactory implements ProductFactory {
         }
         products.clear();
         return pendingArticleNumber;
-
-
     }
-
 }
-

@@ -17,7 +17,8 @@ public class Candy extends Product {
                 + "\nArticle number: " + this.getArticleNumber()
                 + "\nName: " + this.getName()
                 + "\nDescription: " + this.getDescription()
-                + "\nPrice (SEK): " + this.getPrice();
+                + "\nPrice (SEK): " + this.getPrice()
+                + "\n---";
     }
 
     @Override
