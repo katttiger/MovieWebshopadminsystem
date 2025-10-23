@@ -25,4 +25,5 @@ public class Candy extends Product {
     public String category() {
         return "Category: " + this.category;
     }
+
 }

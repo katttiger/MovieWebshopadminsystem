@@ -50,7 +50,6 @@ public class ProductDAOScanner implements ProductDAOInterface {
                 }
             }
         } while (userInput < 1 || userInput > 3);
-        UI.info("Product has been added.");
     }
 
     @Override

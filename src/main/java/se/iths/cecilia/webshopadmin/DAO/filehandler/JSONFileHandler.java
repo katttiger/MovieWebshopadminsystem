@@ -6,6 +6,7 @@ import se.iths.cecilia.webshopadmin.models.Candy;
 import se.iths.cecilia.webshopadmin.models.Movie;
 import se.iths.cecilia.webshopadmin.models.Product;
 import se.iths.cecilia.webshopadmin.models.StuffedAnimal;
+import se.iths.cecilia.webshopadmin.view.UI;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,14 +74,17 @@ public class JSONFileHandler {
                 productList.add((Movie) product);
             } else if (product instanceof Candy) {
                 productList.add((Candy) product);
-            } else {
+            } else if (product instanceof StuffedAnimal) {
                 productList.add((StuffedAnimal) product);
+            } else {
+                throw new IOException();
             }
+            UI.info("Product has been added.");
             mapper.writeValue(file, productList);
             productList.clear();
 
         } catch (IOException e) {
-            System.out.println("Could not save product to JSON file: " + e.getMessage());
+            System.out.println("Could not save product to JSON file: ");
         }
     }
 }

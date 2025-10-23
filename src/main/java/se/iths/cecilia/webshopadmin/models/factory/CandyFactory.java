@@ -14,31 +14,38 @@ public class CandyFactory extends ProductFactory {
     JSONFileHandler jsonFileHandler;
     List<Product> products;
 
+    Candy newProduct;
+
     public CandyFactory() {
         this.jsonFileHandler = JSONFileHandler.getInstance();
     }
 
+    public String returnProductName() {
+        String pendingName;
+        UI.info("Enter name: ");
+        do {
+            pendingName = UI.prompt(sc.nextLine());
+        } while (pendingName.isBlank());
+        return pendingName;
+    }
+
+    public String returnDescription() {
+        String pendingDescription;
+        UI.info("Enter description: ");
+        do {
+            pendingDescription = UI.prompt(sc.nextLine());
+        } while (pendingDescription.isBlank());
+        return pendingDescription;
+    }
+
     @Override
-    public Candy createProduct() {
-        Candy newProduct = new Candy();
-        do {
-            UI.info("Enter name: ");
-            newProduct.setName(UI.prompt(sc.nextLine()));
-        } while (newProduct.getName().isBlank());
-
-        do {
-            UI.info("Enter description: ");
-            newProduct.setDescription(UI.prompt(sc.nextLine()));
-        } while (newProduct.getDescription().isBlank());
-
-        do {
-            newProduct.setArticleNumber(determineArticleNumberIsValid());
-        } while (newProduct.getArticleNumber() == -1);
-
-        do {
-            newProduct.setPrice(determinePriceIsValid());
-        } while (newProduct.getPrice() < 0);
-        return newProduct;
+    public Product createProduct() {
+        return new Product.Builder()
+                .name(returnProductName())
+                .description(returnDescription())
+                .articleNumber(determineArticleNumberIsValid())
+                .price(determinePriceIsValid())
+                .build();
     }
 
     public double determinePriceIsValid() {
@@ -62,9 +69,13 @@ public class CandyFactory extends ProductFactory {
         do {
             pendingArticleNumber = Errorcheck.checkIntegerInput();
             assert pendingArticleNumber >= 0;
+            checkThatArticlenumberIsUnique(pendingArticleNumber);
         }
-        while (pendingArticleNumber < 1);
+        while (pendingArticleNumber < 1 && pendingArticleNumber == -1);
+        return pendingArticleNumber;
+    }
 
+    public void checkThatArticlenumberIsUnique(int pendingArticleNumber) {
         products = jsonFileHandler.retrieveAllItemsInJsonFile();
         for (int i = 0; i < products.toArray().length; i++) {
             if (pendingArticleNumber == products.get(i).getArticleNumber()) {
@@ -73,6 +84,5 @@ public class CandyFactory extends ProductFactory {
             }
         }
         products.clear();
-        return pendingArticleNumber;
     }
 }

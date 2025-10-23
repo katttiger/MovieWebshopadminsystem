@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class Product {
 
     @JsonProperty("articleNumber")
-    private static int articleNumber;
+    private int articleNumber;
 
     @JsonProperty("name")
     private String name;
@@ -38,11 +38,11 @@ public abstract class Product {
     @JsonProperty("description")
     private String description;
 
-    public Product(int articleNumber, String name, double price, String description) {
-        this.articleNumber = articleNumber;
-        this.name = name;
-        this.price = price;
-        this.description = description;
+    private Product(Builder builder) {
+        this.articleNumber = builder.articleNumber;
+        this.name = builder.name;
+        this.price = builder.price;
+        this.description = builder.description;
     }
 
     public Product() {
@@ -81,4 +81,41 @@ public abstract class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public static class Builder {
+        private int articleNumber;
+        private String name;
+        private double price;
+        private String description;
+
+        public Builder articleNumber(int articleNumber) {
+            this.articleNumber = articleNumber;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder price(double price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Product build() {
+            return new Product(this) {
+                @Override
+                public String category() {
+                    return "";
+                }
+            };
+        }
+    }
 }
+
