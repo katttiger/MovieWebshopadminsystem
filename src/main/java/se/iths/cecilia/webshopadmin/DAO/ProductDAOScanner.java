@@ -3,10 +3,6 @@ package se.iths.cecilia.webshopadmin.DAO;
 import se.iths.cecilia.webshopadmin.DAO.filehandler.JSONFileHandler;
 import se.iths.cecilia.webshopadmin.controller.Errorcheck;
 import se.iths.cecilia.webshopadmin.models.Product;
-import se.iths.cecilia.webshopadmin.models.factory.CandyFactory;
-import se.iths.cecilia.webshopadmin.models.factory.MovieFactory;
-import se.iths.cecilia.webshopadmin.models.factory.ProductFactory;
-import se.iths.cecilia.webshopadmin.models.factory.StuffedAnimalFactory;
 import se.iths.cecilia.webshopadmin.view.UI;
 
 import java.util.List;
@@ -38,15 +34,16 @@ public class ProductDAOScanner implements ProductDAOInterface {
             switch (userInput) {
                 case 1 -> {
                     factory = new MovieFactory();
-                    jsonFileHandler.addNewProductToJsonFile(factory.create());
+                    //                   jsonFileHandler.addNewProductToJsonFile(factory.create());
                 }
                 case 2 -> {
                     factory = new CandyFactory();
-                    jsonFileHandler.addNewProductToJsonFile(factory.create());
+                    //                 Candy newProduct = (Candy) factory.create();
+                    //               jsonFileHandler.addNewProductToJsonFile(newProduct);
                 }
                 case 3 -> {
-                    factory = new StuffedAnimalFactory();
-                    jsonFileHandler.addNewProductToJsonFile(factory.create());
+//                    factory = new StuffedAnimalFactory();
+//                    jsonFileHandler.addNewProductToJsonFile(factory.create());
                 }
             }
         } while (userInput < 1 || userInput > 3);

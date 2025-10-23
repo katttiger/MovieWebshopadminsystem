@@ -19,7 +19,7 @@ public class JSONFileHandler {
     private List<Product> productList;
     private final File file;
 
-    private JSONFileHandler() {
+    public JSONFileHandler() {
         this.mapper = new ObjectMapper();
         this.productList = new ArrayList<>();
         String filePath = "products.json";
