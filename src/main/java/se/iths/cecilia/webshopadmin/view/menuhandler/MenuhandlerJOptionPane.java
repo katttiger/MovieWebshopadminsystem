@@ -10,32 +10,31 @@ public class MenuhandlerJOptionPane implements MenuHandlerInterface {
     @Override
     public int userMenuChoice() {
         int choice = 0;
-        String answer;
         do {
-            answer = JOptionPane.showInputDialog(
-                    "1. Add product" +
-                            "\n 2. List all products" +
-                            "\n 3. Search for product" +
-                            "\n 4. Close application");
-            try {
-                switch (Integer.parseInt(answer)) {
-                    case 1 -> choice = 1;
-                    case 2 -> choice = 2;
-                    case 3 -> choice = 3;
-                    case 4 -> choice = 4;
-                    default -> {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Please enter a valid number.");
-                        choice = 0;
-                    }
-                }
-            } catch (NumberFormatException | NullPointerException e) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Please enter a valid number.");
+            String[] options = new String[]{
+                    "Add product",
+                    "List all products",
+                    "Search for products",
+                    "Close application"};
+
+            int answer = JOptionPane.showOptionDialog(
+                    null,
+                    "Enter choice",
+                    "Main menu",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[3]);
+
+            switch (answer) {
+                case 0 -> choice = 1;
+                case 1 -> choice = 2;
+                case 2 -> choice = 3;
+                case 3 -> choice = 4;
             }
-        } while (choice < 1 || choice > 4);
+
+        } while (choice < 1);
         return choice;
     }
 }

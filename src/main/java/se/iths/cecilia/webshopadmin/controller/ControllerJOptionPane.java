@@ -6,8 +6,8 @@ import se.iths.cecilia.webshopadmin.view.menuhandler.MenuHandlerInterface;
 import se.iths.cecilia.webshopadmin.view.menuhandler.MenuhandlerJOptionPane;
 
 public class ControllerJOptionPane implements ControllerInterface {
-    private MenuHandlerInterface menuhandler;
-    private ProductDAOInterface productDAO;
+    private final MenuHandlerInterface menuhandler;
+    private final ProductDAOInterface productDAO;
 
     public ControllerJOptionPane() {
         this.menuhandler = new MenuhandlerJOptionPane();

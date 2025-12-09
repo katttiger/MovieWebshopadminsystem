@@ -21,39 +21,34 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
 
     @Override
     public void addProduct() {
+        String[] options = new String[]{"Movie", "Candy", "Stuffed animal", "Cancel"
+        };
+
         try {
-            String answer = JOptionPane.showInputDialog("""
-                    What type of product do you want to add?
-                    1. Movie
-                    2. Candy
-                    3. Stuffed animal""");
+            int answer = JOptionPane.showOptionDialog(
+                    null,
+                    "What type of product do you want to add?",
+                    "Add product",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    options,
+                    options[3]
+            );
 
             Product newProduct = null;
-            int userChoice = Integer.parseInt(answer);
-            if (userChoice < 1 || userChoice > 3) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Input must be between 1 and 3. Try again.");
-            } else {
-                switch (userChoice) {
-                    case 1 -> {
-                        newProduct = createNewProduct(new Movie());
-                        jsonFileHandler.addNewProductToJsonFile((Movie) newProduct);
-                    }
-                    case 2 -> {
-                        newProduct = createNewProduct(new Candy());
-                        jsonFileHandler.addNewProductToJsonFile((Candy) newProduct);
-                    }
-                    case 3 -> {
-                        newProduct = createNewProduct(new StuffedAnimal());
-                        jsonFileHandler.addNewProductToJsonFile((StuffedAnimal) newProduct);
-                    }
-                }
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Product has been added."
-                );
+            switch (answer) {
+                case 0 -> newProduct = createProduct(new Movie());
+                case 1 -> newProduct = createProduct(new Candy());
+                case 2 -> newProduct = createProduct(new StuffedAnimal());
             }
+
+            jsonFileHandler.addNewProductToJsonFile(newProduct);
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Product has been added."
+            );
 
         } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(
@@ -63,75 +58,40 @@ public class ProductDAOJOptionPane implements ProductDAOInterface {
         }
     }
 
-    public Product createNewProduct(Product newProduct) {
+    public Product createProduct(Product newProduct) {
+
         do {
-            newProduct.setName(JOptionPane.showInputDialog(
-                    "Step 1 of 4:\n Enter name of product: "));
+            String name = JOptionPane.showInputDialog(
+                    "Enter name of movie"
+            );
+            newProduct.setName(name);
         } while (newProduct.getName().isBlank());
+
         do {
-            newProduct.setDescription(
-                    JOptionPane.showInputDialog(
-                            "Step 2 of 4:\n Enter description of product: "
-                    )
+            String description = JOptionPane.showInputDialog(
+                    "Enter description of movie"
             );
+            newProduct.setDescription(description);
         } while (newProduct.getDescription().isBlank());
-//        do {
-//            newProduct.setArticleNumber(determineArticleNumberIsValid());
-//        } while (newProduct.getArticleNumber() == -1);
+
         do {
-            newProduct.setPrice(determinePriceIsValid());
-        } while (newProduct.getPrice() < 0);
+            int aricleNumber = Integer.parseInt(
+                    JOptionPane.showInputDialog("Enter articlenumber of movie"));
+            if (aricleNumber > 0) {
+                newProduct.setArticleNumber(aricleNumber);
+            } else {
+                newProduct.setArticleNumber(0);
+            }
+        } while (newProduct.getArticleNumber() == 0);
+
+        do {
+            double price = Double.parseDouble(
+                    JOptionPane.showInputDialog("Enter price of movie")
+            );
+            newProduct.setPrice(price);
+        } while (newProduct.getPrice() == -1);
+
         return newProduct;
-    }
-
-    private int determineArticleNumberIsValid() {
-        int pendingArticleNumber = 0;
-        try {
-            pendingArticleNumber = Integer.parseInt(
-                    JOptionPane.showInputDialog(
-                            "Step 3 of 4:\n Enter article number of product: "
-                    )
-            );
-
-            products = jsonFileHandler.retrieveAllItemsInJsonFile();
-            for (int i = 0; i < products.toArray().length; i++) {
-                if (pendingArticleNumber == products.get(i).getArticleNumber()) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Article number has aldready been taken. Please try again;");
-                    pendingArticleNumber = -1;
-                }
-            }
-        } catch (NumberFormatException | HeadlessException e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Invalid format. Please try again.");
-            pendingArticleNumber = -1;
-        }
-        return pendingArticleNumber;
-    }
-
-    private double determinePriceIsValid() {
-        double pendingPrice = 0;
-        try {
-            pendingPrice = Integer.parseInt(
-                    JOptionPane.showInputDialog(
-                            "Step 4 of 4:\n Enter price of product: "
-                    )
-            );
-            if (pendingPrice < 0) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Price must be a positive number.");
-            }
-        } catch (NumberFormatException | HeadlessException e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Invalid input. Please try again."
-            );
-            pendingPrice = -1;
-        }
-        return pendingPrice;
     }
 
     @Override

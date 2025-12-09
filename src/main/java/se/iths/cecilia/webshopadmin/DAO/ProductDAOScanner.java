@@ -17,36 +17,36 @@ public class ProductDAOScanner implements ProductDAOInterface {
 
     @Override
     public void addProduct() {
-        ProductFactory factory;
-        int userInput = -1;
-        do {
-            UI.info("""
-                    What type of product do you want to add?
-                    [1] Movie
-                    [2] Candy
-                    [3] Stuffed animal""");
-
-            userInput = Errorcheck.checkIntegerInput();
-            if (userInput < 1 || userInput > 3) {
-                UI.info("Input must be between 1 and 3");
-            }
-
-            switch (userInput) {
-                case 1 -> {
-                    factory = new MovieFactory();
-                    //                   jsonFileHandler.addNewProductToJsonFile(factory.create());
-                }
-                case 2 -> {
-                    factory = new CandyFactory();
-                    //                 Candy newProduct = (Candy) factory.create();
-                    //               jsonFileHandler.addNewProductToJsonFile(newProduct);
-                }
-                case 3 -> {
-//                    factory = new StuffedAnimalFactory();
-//                    jsonFileHandler.addNewProductToJsonFile(factory.create());
-                }
-            }
-        } while (userInput < 1 || userInput > 3);
+//        ProductFactory factory;
+//        int userInput = -1;
+//        do {
+//            UI.info("""
+//                    What type of product do you want to add?
+//                    [1] Movie
+//                    [2] Candy
+//                    [3] Stuffed animal""");
+//
+//            userInput = Errorcheck.checkIntegerInput();
+//            if (userInput < 1 || userInput > 3) {
+//                UI.info("Input must be between 1 and 3");
+//            }
+//
+//            switch (userInput) {
+//                case 1 -> {
+//                    factory = new Movie();
+//                    //                   jsonFileHandler.addNewProductToJsonFile(factory.create());
+//                }
+//                case 2 -> {
+//                    factory = new CandyFactory();
+//                    //                 Candy newProduct = (Candy) factory.create();
+//                    //               jsonFileHandler.addNewProductToJsonFile(newProduct);
+//                }
+//                case 3 -> {
+////                    factory = new StuffedAnimalFactory();
+////                    jsonFileHandler.addNewProductToJsonFile(factory.create());
+//                }
+//            }
+//        } while (userInput < 1 || userInput > 3);
     }
 
     @Override
